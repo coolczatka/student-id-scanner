@@ -16,25 +16,16 @@ public class checkingActivity extends AppCompatActivity {
     PendingIntent mPendingIntent;
     TextView textViewInfo;
     SQLiteDatabase db;
+    NfcTagParser p;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checking);
         textViewInfo = findViewById(R.id.info);
+        p = new NfcTagParser(nfcAdapter);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         mPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        if(nfcAdapter == null){
-            Toast.makeText(this,
-                    "NFC NOT supported on this devices!",
-                    Toast.LENGTH_LONG).show();
-            finish();
-        }else if(!nfcAdapter.isEnabled()){
-            Toast.makeText(this,
-                    "NFC NOT Enabled!",
-                    Toast.LENGTH_LONG).show();
-            finish();
-        }
     }
 
     @Override
@@ -53,14 +44,8 @@ public class checkingActivity extends AppCompatActivity {
         resolveIntent(intent);
     }
     private void resolveIntent(Intent intent){
-        NfcTagParser p = new NfcTagParser(this);
-        if(p.checkifok()){
-
-        }
-        else{
-            Toast.
-        }
-
+        String tagInfo = p.getTag(intent);
+        textViewInfo.setText(tagInfo);
 
     }
 

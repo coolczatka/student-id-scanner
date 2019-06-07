@@ -6,11 +6,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.nfc.NfcAdapter;
 
 public class NfcTagParser {
-    NfcAdapter nfcAdapter;
-    String mess;
+    private NfcAdapter nfcAdapter;
 
-    public NfcTagParser(AppCompatActivity a){
-        nfcAdapter = NfcAdapter.getDefaultAdapter(a);
+
+    private String mess;
+
+    public String getMess() {
+        return mess;
+    }
+
+    public NfcTagParser(NfcAdapter b){
+        nfcAdapter = b;
         mess="";
     }
     public boolean checkifok(){
@@ -24,7 +30,7 @@ public class NfcTagParser {
         }
         return true;
     }
-    public String getTag(Intent intent){
+    public String getTagInfo(Intent intent){
         String action = intent.getAction();
 
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
@@ -42,6 +48,25 @@ public class NfcTagParser {
                     tagInfo += Integer.toHexString(tagId[i] & 0xFF) + " ";
                 }
                 return tagInfo;
+            }
+        }
+        return "";
+    }
+    public String getTag(Intent intent){
+        String action = intent.getAction();
+
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            byte[] tagId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
+
+            if(tag == null){
+                return "";
+            }else{
+                String tagS = "";
+                for(int i=0; i<tagId.length; i++){
+                    tagS += Integer.toHexString(tagId[i] & 0xFF) + " ";
+                }
+                return tagS;
             }
         }
         return "";
