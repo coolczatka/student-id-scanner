@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ntp_projekt</string>
     <string name="title_activity_checking">checkingActivity</string>
+    <string name="title_activity_adding_group">addingGroupActivity</string>
 </resources>

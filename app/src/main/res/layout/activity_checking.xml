@@ -6,11 +6,27 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".checkingActivity"
+    android:id="@+id/checkLayout"
+    >
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:text="Sprawdz obecność"
+        android:id="@+id/button7"
+        android:onClick="button_clicked"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="378dp"
+        android:layout_height="632dp"
+        android:layout_marginBottom="8dp" />
 
     <TextView
         android:id="@+id/info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"/>
 
 </LinearLayout>

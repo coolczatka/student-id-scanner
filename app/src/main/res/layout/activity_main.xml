@@ -24,7 +24,21 @@
 
     <Button
         android:id="@+id/button3"
+        android:onClick="addGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Dodaj przedmiot" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:onClick="list"
+        android:layout_height="wrap_content"
+        android:text="lista" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 </LinearLayout>

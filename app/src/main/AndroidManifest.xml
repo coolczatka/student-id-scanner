@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".addingStudentActivity"></activity>
+        <activity android:name=".addGoupActivity"></activity>
+        <activity android:name=".StudentDetailsActivity" />
+        <activity android:name=".list" />
+        <activity android:name=".addingStudentActivity" />
         <activity
             android:name=".checkingActivity"
             android:label="@string/title_activity_checking"
