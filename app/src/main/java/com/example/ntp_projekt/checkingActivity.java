@@ -94,9 +94,9 @@ public class checkingActivity extends BaseActivity {
         c.moveToFirst();
         String sub_id = c.getString(c.getColumnIndex("id"));
         //sprawdzenie czy student nalezy do grupy
-        c = db.rawQuery("select count(*) from subject su join relation_3 r on su.id=r.subject_id join student s on s.id=r.student_id where s.id="+id+" and su.id="+sub_id+";",null);
+        c = db.rawQuery("select count(s.id) from subject su join relation_3 r on su.id=r.subject_id join student s on s.id=r.student_id where s.id="+id+" and su.id="+sub_id+";",null);
         c.moveToFirst();
-        if(c.getInt(0)>0){ ;
+        if(c.getInt(0)>0){
             if(student_list.contains(id)){
                 lay.setBackgroundColor(Color.YELLOW);
             }
@@ -117,7 +117,15 @@ public class checkingActivity extends BaseActivity {
             }
         }, 500);}
         catch(Exception e){
-            textViewInfo.setText(e.getMessage());
+            lay.setBackgroundColor(Color.RED);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    lay.setBackgroundColor(Color.TRANSPARENT);
+                    textViewInfo.setText("");
+                }
+            }, 500);
+
         }
 
     }
