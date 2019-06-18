@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Timer;
 
 public class checkingActivity extends BaseActivity {
@@ -36,6 +37,7 @@ public class checkingActivity extends BaseActivity {
     LinearLayout lay;
     Boolean flag = false;
     GroupList RVadapter; //adapter
+    LinkedList<Integer> student_list = new LinkedList<Integer>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,9 +93,22 @@ public class checkingActivity extends BaseActivity {
         c = db.rawQuery("select id from subject where name='" + RVadapter.getName() + "';", null);
         c.moveToFirst();
         String sub_id = c.getString(c.getColumnIndex("id"));
-        db.execSQL("insert into presence(datee,student_id,subject_id)values('" + dateString + "'," + id + "," + sub_id + ");");
-        lay.setBackgroundColor(Color.GREEN);
-        textViewInfo.setText("jest git jest bit");
+        //sprawdzenie czy student nalezy do grupy
+        c = db.rawQuery("select count(*) from subject su join relation_3 r on su.id=r.subject_id join student s on s.id=r.student_id where s.id="+id+" and su.id="+sub_id+";",null);
+        c.moveToFirst();
+        if(c.getInt(0)>0){ ;
+            if(student_list.contains(id)){
+                lay.setBackgroundColor(Color.YELLOW);
+            }
+            else{
+                lay.setBackgroundColor(Color.GREEN);
+                db.execSQL("insert into presence(datee,student_id,subject_id)values('" + dateString + "'," + id + "," + sub_id + ");");
+                student_list.add(id);
+            }
+        }
+        else{
+            lay.setBackgroundColor(Color.RED);
+        }
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

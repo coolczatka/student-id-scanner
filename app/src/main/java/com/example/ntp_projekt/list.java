@@ -22,7 +22,6 @@ public class list extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        t = findViewById(R.id.textView8);
         init_arrays();
         RecyclerView r = findViewById(R.id.reclay);
         RecyclerViewAdapter a = new RecyclerViewAdapter(this, pct, percentages, groups);

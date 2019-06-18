@@ -18,13 +18,13 @@ public class StudentDetailsActivity extends BaseActivity {
         String extra = getIntent().getExtras().getString("group_nr");
         setContentView(R.layout.activity_student_details);
         try {
-            Cursor c = db.rawQuery("Select index_id from student s join relation_3 r on s.id=r.student_id join subject su on su.id=r.subject_id " +
+            Cursor c = db.rawQuery("Select s.id, s.index_id from student s join relation_3 r on s.id=r.student_id join subject su on su.id=r.subject_id " +
                     "where su.name='" + extra + "';", null);
             c.moveToFirst();
             do {
-                String query = "select id from subject where name=" + getIntent().getExtras().getString("group_nr") + " LIMIT 1;";
-                Cursor d = db.rawQuery("Select count(*) from presence where student_id=" + c.getString(c.getColumnIndex("id")) + " and subject_id=(" + query + ");", null);
-                Cursor e = db.rawQuery("Select hmm from subject where name=" + extra + ";", null);
+                String query = "select id from subject where name='" + extra+ "'";
+                Cursor d = db.rawQuery("Select count(*) from presence where student_id=" + c.getString(c.getColumnIndex("id")) + " and subject_id in (" + query + ");", null);
+                Cursor e = db.rawQuery("Select hmm from subject where name='" + extra + "';", null);
                 d.moveToFirst();
                 e.moveToFirst();
                 double perc = 1.0 * d.getInt(0) / e.getInt(0);
@@ -37,8 +37,7 @@ public class StudentDetailsActivity extends BaseActivity {
             StudentList adapter = new StudentList(this, pct, percentages, groups);
             view.setAdapter(adapter);
         }catch(Exception e){
-            TextView t = findViewById(R.id.textView3);
-            t.setText(e.getMessage());
+            
         }
     }
 }

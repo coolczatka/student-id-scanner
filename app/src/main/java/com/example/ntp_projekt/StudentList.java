@@ -16,7 +16,7 @@ public class StudentList extends RecyclerViewAdapter {
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         viewHolder.bar.setProgress(pct.get(i));
-        viewHolder.percentages.setText(percentages.get(i));
+        viewHolder.percentages.setText(percentages.get(i)+"%");
         viewHolder.group.setText(groups.get(i));
     }
 }

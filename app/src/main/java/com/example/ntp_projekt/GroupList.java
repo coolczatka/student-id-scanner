@@ -23,17 +23,16 @@ public class GroupList extends RecyclerViewAdapter {
         return name;
     }
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         viewHolder.bar.setVisibility(View.GONE);
         viewHolder.percentages.setVisibility(View.GONE);
         viewHolder.group.setText(groups.get(i));
-        temp = groups.get(i);
         viewHolder.group.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
         viewHolder.parent.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 if(name=="") {
-                    name = temp;
+                    name = groups.get(i);
                     viewHolder.parent.setBackgroundColor(Color.LTGRAY);
                     holder = viewHolder;
                 }
@@ -45,7 +44,7 @@ public class GroupList extends RecyclerViewAdapter {
                 else{
                     holder.parent.setBackgroundColor(Color.WHITE);
                     viewHolder.parent.setBackgroundColor(Color.LTGRAY);
-                    name=temp;
+                    name=groups.get(i);
                     holder=viewHolder;
                 }
             }

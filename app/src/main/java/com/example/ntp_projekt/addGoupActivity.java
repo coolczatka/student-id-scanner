@@ -48,29 +48,26 @@ public class addGoupActivity extends BaseActivity {
         mcursor.moveToFirst();
         int icount = mcursor.getInt(0);
         if(icount>0) {
-            c = db.rawQuery("Select name from subject;", null);
+            c = db.rawQuery("Select count(*) from subject where name='"+edit.getText()+"';", null);
                 c.moveToFirst();
-                error.setText(edit.getText().toString());
-                do {
-                    if (edit.getText().toString() == c.getString(0)) {
-                        error.setText("Taka nazwa już istnieje");
-                        ok = false;
-                    }
-                } while (c.moveToNext());
+                c.moveToFirst();
+                if(c.getInt(0)>0){
+                    ok=false;
+                    error.setText("Taka nazwa już istnieje");
+                }
         }
         if (ok) {
             db.execSQL("Insert into subject(name,hmm) values('" + edit.getText() + "',0);");
+            error.setText("Dodano grupę");
+            list = adapter.getChosen_nrs();
+            c = db.rawQuery("select id from subject where name='" + edit.getText() + "';", null);
+            c.moveToFirst();
+            Integer id = c.getInt(0);
+            for (int i = 0; i < list.size(); i++) {
+                db.execSQL("insert into relation_3(subject_id,student_id)values(" + id + "," + list.get(i) + ");");
+            }
         } else
             return;
-        list = adapter.getChosen_nrs();
-        c = db.rawQuery("select id from subject where name='" + edit.getText() + "';", null);
-        c.moveToFirst();
-        Integer id = c.getInt(0);
-        String s = "";
-        error.setText(String.valueOf(list.size()));
-        for (int i = 0; i < list.size(); i++) {
-           db.execSQL("insert into relation_3(subject_id,student_id)values(" + id + "," + list.get(i) + ");");
-        }
 
 
     }

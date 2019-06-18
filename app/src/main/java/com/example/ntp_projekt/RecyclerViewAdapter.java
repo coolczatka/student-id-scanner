@@ -36,7 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         viewHolder.bar.setProgress(pct.get(i));
-        viewHolder.percentages.setText(percentages.get(i));
+        viewHolder.percentages.setText(percentages.get(i)+"%");
         viewHolder.group.setText(groups.get(i));
         viewHolder.parent.setOnClickListener(new View.OnClickListener(){
             @Override

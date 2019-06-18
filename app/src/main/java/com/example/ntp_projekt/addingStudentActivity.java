@@ -2,6 +2,7 @@ package com.example.ntp_projekt;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.nfc.NfcAdapter;
@@ -46,11 +47,11 @@ public class addingStudentActivity extends BaseActivity {
                     error.setText(e.getMessage());
                 }
             } else {
-                Toast toast = Toast.makeText(getApplicationContext(), "błędny tag", Toast.LENGTH_SHORT);
+                error.setText("Tej legitymacji już użyto");
             }
         }
         else {
-            Toast toast = Toast.makeText(getApplicationContext(), "błędny nr", Toast.LENGTH_SHORT);
+            error.setText("Taki indeks już istnieje");
         }
     }
     @Override
@@ -65,8 +66,11 @@ public class addingStudentActivity extends BaseActivity {
     }
     private boolean validateIndex(String s){
         boolean result = true;
-        if(s.length()!=6)
+        Cursor c = db.rawQuery("Select count(*) from student where index_id="+s+";",null);
+        c.moveToFirst();
+        if(c.getInt(0)>0){
             result=false;
+        }
         return result;
 
     }
@@ -74,9 +78,10 @@ public class addingStudentActivity extends BaseActivity {
         String[] a = s.split(" ");
         if(a.equals(""))
             return false;
-        for(int i=0;i<a.length;i++){
-            if(a[i].length()>2)
-                return false;
+        Cursor c = db.rawQuery("Select count(*) from student where card_id='"+s+"';",null);
+        c.moveToFirst();
+        if(c.getInt(0)>0){
+            return false;
         }
         return true;
     }

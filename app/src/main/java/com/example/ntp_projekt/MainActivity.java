@@ -60,12 +60,15 @@ public class MainActivity extends BaseActivity {
 
         Cursor c =db.rawQuery("select * from presence;",null);
         c.moveToFirst();
+        /*
         String s = "";
+
         do{
             s+=c.getString(0)+" "+c.getString(1)+" "+c.getString(2)+" "+c.getString(3)+"\n";
         }while(c.moveToNext());
         TextView t = findViewById(R.id.textView6);
         t.setText(s);
+        */
 
     }
     public void presenceChecking(View view){
