@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class RecyclerViewAdapterSt extends RecyclerView.Adapter<RecyclerViewAdapterSt.ViewHolder>{
-    private ArrayList<String> index_nrs;
+    private ArrayList<String> ids;
+    protected ArrayList<String>  index_nrs;
     private LinkedList<String> chosen_nrs = new LinkedList<String>();
     int a;
     Context c;
@@ -24,7 +25,8 @@ public class RecyclerViewAdapterSt extends RecyclerView.Adapter<RecyclerViewAdap
     public LinkedList<String> getChosen_nrs() {
         return chosen_nrs;
     }
-    public RecyclerViewAdapterSt(ArrayList<String> index_nrs) {
+    public RecyclerViewAdapterSt(ArrayList<String> ids,ArrayList<String> index_nrs) {
+        this.ids = ids;
         this.index_nrs = index_nrs;
     }
 
@@ -42,12 +44,12 @@ public class RecyclerViewAdapterSt extends RecyclerView.Adapter<RecyclerViewAdap
         viewHolder.parent.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(chosen_nrs.contains(index_nrs.get(i))){
-                    chosen_nrs.remove(index_nrs.get(i));
+                if(chosen_nrs.contains(ids.get(i))){
+                    chosen_nrs.remove(ids.get(i));
                     viewHolder.parent.setBackgroundColor(Color.WHITE);
                 }
                 else{
-                    chosen_nrs.push(index_nrs.get(i));
+                    chosen_nrs.push(ids.get(i));
                     viewHolder.parent.setBackgroundColor(Color.LTGRAY);
                 }
             }
@@ -55,7 +57,7 @@ public class RecyclerViewAdapterSt extends RecyclerView.Adapter<RecyclerViewAdap
     }
     @Override
     public int getItemCount() {
-        return index_nrs.size();
+        return ids.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

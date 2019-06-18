@@ -19,6 +19,7 @@ public class addGoupActivity extends BaseActivity {
     EditText edit;
     TextView error;
     ArrayList<String> index_nrs = new ArrayList<String>();
+    ArrayList<String> ids = new ArrayList<String>();
     LinkedList<String> list = new LinkedList<String>();
     RecyclerView view;
     RecyclerViewAdapterSt adapter;
@@ -30,12 +31,13 @@ public class addGoupActivity extends BaseActivity {
         edit = findViewById(R.id.editText);
         error = findViewById(R.id.textView10);
         view = findViewById(R.id.recyclerView);
-        Cursor c = db.rawQuery("Select id from student;", null);
+        Cursor c = db.rawQuery("Select id,index_id from student;", null);
         c.moveToFirst();
         do {
-            index_nrs.add(c.getString(0));
+            ids.add(c.getString(0));
+            index_nrs.add(c.getString(1));
         } while (c.moveToNext());
-        adapter = new RecyclerViewAdapterSt(index_nrs);
+        adapter = new RecyclerViewAdapterSt(ids,index_nrs);
         view.setAdapter(adapter);
     }
 
